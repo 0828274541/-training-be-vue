@@ -1,20 +1,23 @@
 import Vue from "vue";
 import Router from "vue-router";
 
+const store = require('./store/store').default
+
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/pages",
+      path: "/public",
       component: () => import("@/views/pages/Index"),
       children: [
         {
           name: "Home",
           path: "home",
-          component: () => import("@/views/pages/public/Home")
+          component: () => import("@/views/pages/public/Home"),
+          // props: route => ({ page: route.query.page, limit: route.query.limit })
         },
         {
           name: "Detail",
@@ -26,7 +29,11 @@ export default new Router({
           path: "login",
           component: () => import("@/views/pages/Login")
         },
-
+        {
+          name: "Logout",
+          path: "logout",
+          component: () => import("@/views/pages/Logout")
+        },
         {
           name: "Register",
           path: "register",
@@ -60,93 +67,6 @@ export default new Router({
           path: "",
           component: () => import("@/views/dashboard/Dashboard")
         },
-        // Pages
-
-        // Components
-        {
-          name: "Buttons",
-          path: "components/buttons",
-          component: () => import("@/views/dashboard/component/Buttons")
-        },
-        {
-          name: "Grid System",
-          path: "components/grid-system",
-          component: () => import("@/views/dashboard/component/Grid")
-        },
-        {
-          name: "Tabs",
-          path: "components/tabs",
-          component: () => import("@/views/dashboard/component/Tabs")
-        },
-        {
-          name: "Notifications",
-          path: "components/notifications",
-          component: () => import("@/views/dashboard/component/Notifications")
-        },
-        {
-          name: "Icons",
-          path: "components/icons",
-          component: () => import("@/views/dashboard/component/Icons")
-        },
-        {
-          name: "Typography",
-          path: "components/typography",
-          component: () => import("@/views/dashboard/component/Typography")
-        },
-        // Forms
-        {
-          name: "Regular Forms",
-          path: "forms/regular",
-          component: () => import("@/views/dashboard/forms/RegularForms")
-        },
-        {
-          name: "Extended Forms",
-          path: "forms/extended",
-          component: () => import("@/views/dashboard/forms/ExtendedForms")
-        },
-        {
-          name: "Validation Forms",
-          path: "forms/validation",
-          component: () => import("@/views/dashboard/forms/ValidationForms")
-        },
-        {
-          name: "Wizard",
-          path: "forms/wizard",
-          component: () => import("@/views/dashboard/forms/Wizard")
-        },
-        // Tables
-        {
-          name: "Regular Tables",
-          path: "tables/regular-tables",
-          component: () => import("@/views/dashboard/tables/RegularTables")
-        },
-        {
-          name: "Extended Tables",
-          path: "tables/extended-tables",
-          component: () => import("@/views/dashboard/tables/ExtendedTables")
-        },
-        {
-          name: "Data Tabels",
-          path: "tables/data-tables",
-          component: () => import("@/views/dashboard/tables/DataTables")
-        },
-        // Maps
-        // Root level
-        {
-          name: "Widgets",
-          path: "widgets",
-          component: () => import("@/views/dashboard/Widgets")
-        },
-        {
-          name: "Charts",
-          path: "charts",
-          component: () => import("@/views/dashboard/Charts")
-        },
-        {
-          name: "Calendar",
-          path: "calendar",
-          component: () => import("@/views/dashboard/Calendar")
-        }
       ]
     },
     {
@@ -162,3 +82,16 @@ export default new Router({
     }
   ]
 });
+
+router.beforeEach((to, from, next) => {
+  const token = store.getters.GET_TOKEN;
+  if (to.name === 'Register') {
+    next()
+  } else if (to.name !== 'Login' && !token) {
+    next({ name: 'Login' })
+  } else if (to.name === 'Login' && token) {
+    next({ name: 'Home' })
+  } else next()
+})
+
+export default router;

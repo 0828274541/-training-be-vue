@@ -11,15 +11,12 @@
     width="260"
     v-bind="$attrs"
   >
-    <template v-slot:img="props">
-      <v-img :gradient="`to bottom, ${barColor}`" v-bind="props" />
-    </template>
 
     <v-list-item two-line>
       <v-list-item-content>
         <v-list-item-title class="text-uppercase font-weight-regular display-2">
-          <span class="logo-mini">{{ $t("ct") }}</span>
-          <span class="logo-normal">{{ $t("tim") }}</span>
+          <span class="logo-mini">{{ $t("pj") }}</span>
+          <span class="logo-normal">{{ $t("project") }}</span>
         </v-list-item-title>
       </v-list-item-content>
     </v-list-item>
@@ -68,6 +65,11 @@ export default {
 
   data: () => ({
     items: [
+            {
+        icon: "mdi-view-dashboard",
+        title: "dashboard",
+        to: "/"
+      },
       {
         group: "/users",
         icon: "mdi-image",
@@ -83,152 +85,6 @@ export default {
           }
         ]
       },
-      {
-        icon: "mdi-view-dashboard",
-        title: "dashboard",
-        to: "/"
-      },
-      {
-        group: "/pages",
-        icon: "mdi-image",
-        title: "pages",
-        children: [
-          {
-            title: "home",
-            to: "home"
-          },
-          {
-            title: "pricing",
-            to: "pricing"
-          },
-          {
-            title: "rtl",
-            to: "rtl"
-          },
-          {
-            title: "timeline",
-            to: "timeline"
-          },
-          {
-            title: "login",
-            to: "login"
-          },
-          {
-            title: "register",
-            to: "pricing"
-          },
-          {
-            title: "lock",
-            to: "lock"
-          },
-          {
-            title: "user",
-            to: "user"
-          },
-          {
-            title: "error",
-            to: "404"
-          }
-        ]
-      },
-      {
-        group: "/components",
-        icon: "mdi-view-comfy",
-        title: "components",
-        children: [
-          {
-            title: "multi",
-            group: "",
-            children: [
-              {
-                title: "example",
-                href: "#"
-              }
-            ]
-          },
-          {
-            title: "buttons",
-            to: "buttons"
-          },
-          {
-            title: "grid",
-            to: "grid-system"
-          },
-          {
-            title: "tabs",
-            to: "tabs"
-          },
-          {
-            title: "notifications",
-            to: "notifications"
-          },
-          {
-            title: "icons",
-            to: "icons"
-          },
-          {
-            title: "typography",
-            to: "typography"
-          }
-        ]
-      },
-      {
-        group: "/forms",
-        icon: "mdi-clipboard-outline",
-        title: "forms",
-        children: [
-          {
-            title: "rforms",
-            to: "regular"
-          },
-          {
-            title: "eforms",
-            to: "extended"
-          },
-          {
-            title: "vforms",
-            to: "validation"
-          },
-          {
-            title: "wizard",
-            to: "wizard"
-          }
-        ]
-      },
-      {
-        group: "/tables",
-        icon: "mdi-grid",
-        title: "tables",
-        children: [
-          {
-            title: "rtables",
-            to: "regular-tables"
-          },
-          {
-            title: "etables",
-            to: "extended-tables"
-          },
-          {
-            title: "dtables",
-            to: "data-tables"
-          }
-        ]
-      },
-      {
-        icon: "mdi-widgets",
-        title: "widgets",
-        to: "/widgets"
-      },
-      {
-        icon: "mdi-chart-timeline-variant",
-        title: "charts",
-        to: "/charts"
-      },
-      {
-        icon: "mdi-calendar-range",
-        title: "calendar",
-        to: "/calendar"
-      }
     ]
   }),
 

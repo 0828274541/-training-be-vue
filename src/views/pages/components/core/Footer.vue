@@ -1,9 +1,9 @@
 <template>
   <v-footer
     id="pages-core-footer"
-    absolute
-    color="transparent"
+    color="grey lighten-3"
     dark
+    class="black--text"
   >
     <v-container>
       <v-row
@@ -75,7 +75,7 @@
 <style lang="sass">
   #pages-core-footer
     a
-      color: #FFFFFF
+      color: #000000
       font-size: .825rem
       font-weight: 500
       text-decoration: none

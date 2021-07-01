@@ -1,9 +1,5 @@
 <template>
-  <v-container
-    id="login"
-    fill-height
-    tag="section"
-  >
+  <v-container id="login" fill-height tag="section">
     <v-row justify="center">
       <v-slide-y-transition appear>
         <base-material-card
@@ -15,22 +11,17 @@
         >
           <template v-slot:heading>
             <div class="text-center">
-              <h1 class="display-2 font-weight-bold mb-2">
-                Login
-              </h1>
+              <h1 class="display-2 font-weight-bold mb-2">Login</h1>
 
               <v-btn
                 v-for="(social, i) in socials"
                 :key="i"
-                :href="social.href"
                 class="ma-1"
                 icon
                 rel="noopener"
                 target="_blank"
               >
-                <v-icon
-                  v-text="social.icon"
-                />
+                <v-icon v-text="social.icon" />
               </v-btn>
             </div>
           </template>
@@ -42,15 +33,10 @@
 
             <v-text-field
               color="secondary"
-              label="First Name..."
+              label="User Name..."
               prepend-icon="mdi-face"
               class="mt-10"
-            />
-
-            <v-text-field
-              color="secondary"
-              label="Email..."
-              prepend-icon="mdi-email"
+              v-model="username"
             />
 
             <v-text-field
@@ -58,6 +44,7 @@
               color="secondary"
               label="Password..."
               prepend-icon="mdi-lock-outline"
+              v-model="password"
             />
 
             <pages-btn
@@ -65,6 +52,7 @@
               color=""
               depressed
               class="v-btn--text success--text"
+              @click="login()"
             >
               Let's Go
             </pages-btn>
@@ -76,28 +64,52 @@
 </template>
 
 <script>
-  export default {
-    name: 'PagesLogin',
+import { mapMutations } from "vuex";
 
-    components: {
-      PagesBtn: () => import('./components/Btn')
+const { authApi } = require("../../apis/");
+
+export default {
+  name: "PagesLogin",
+
+  components: {
+    PagesBtn: () => import("./components/Btn"),
+  },
+  data: () => ({
+    socials: [
+      {
+        href: "#",
+        icon: "mdi-facebook-box",
+      },
+      {
+        href: "#",
+        icon: "mdi-twitter",
+      },
+      {
+        href: "#",
+        icon: "mdi-github-box",
+      },
+    ],
+    username: "",
+    password: "",
+  }),
+
+  methods: {
+    ...mapMutations({
+      setUserInfo: "SET_USER_INFO",
+    }),
+
+    login: async function () {
+      const result = await authApi.login({
+        username: this.username,
+        password: this.password,
+      });
+      if (result.data.code === 200) {
+        this.setUserInfo(result.data);
+        this.$router.push("/public/home");
+      } else if (result.data.code === 400) {
+        this.$notificate.showMessage({ content: result.data.message, color: 'info' });
+      }
     },
-
-    data: () => ({
-      socials: [
-        {
-          href: '#',
-          icon: 'mdi-facebook-box'
-        },
-        {
-          href: '#',
-          icon: 'mdi-twitter'
-        },
-        {
-          href: '#',
-          icon: 'mdi-github-box'
-        }
-      ]
-    })
-  }
+  },
+};
 </script>

@@ -1,11 +1,9 @@
 <template>
   <v-app id="">
-    <v-main class="grey lighten-3">
+    <v-main class="grey lighten-3" id = "vmain">
       <v-container>
-        <v-row>
-          <pages-category />
-          <pages-list />
-        </v-row>
+        <pages-category />
+        <pages-list />
       </v-container>
     </v-main>
   </v-app>
@@ -13,10 +11,14 @@
 
 <script>
 export default {
-  data: () => ({ drawer: null }),
   components: {
     PagesCategory: () => import("./Category"),
     PagesList: () => import("./List"),
   },
 };
 </script>
+<style>
+#vmain{
+  padding: 0 !important;
+}
+</style>

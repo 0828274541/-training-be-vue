@@ -2,7 +2,6 @@
   <v-app>
     <pages-core-app-bar />
     <pages-core-view />
-
     <pages-core-footer />
   </v-app>
 </template>

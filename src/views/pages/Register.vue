@@ -1,57 +1,18 @@
 <template>
-  <v-container
-    id="register"
-    fill-height
-    tag="section"
-  >
-    <v-row justify="center">
-      <v-col cols="9">
+  <v-container id="register" fill-height tag="section">
+    <v-row justify="center" style="margin-top: 50px">
+      <v-col cols="5" style="background-color: lavender">
         <v-slide-y-transition appear>
           <v-card
             class="pa-3 pa-md-5 mx-auto"
-            light
+            style="background-color: cornsilk"
           >
             <pages-heading class="text-center display-3">
               Register
             </pages-heading>
 
             <v-row>
-              <v-col
-                cols="12"
-                md="6"
-              >
-                <v-row no-gutters>
-                  <v-col
-                    v-for="(section, i) in sections"
-                    :key="i"
-                    cols="12"
-                  >
-                    <v-list-item three-line>
-                      <v-list-item-icon class="mr-4 mt-5 mt-md-4">
-                        <v-icon
-                          :large="$vuetify.breakpoint.mdAndUp"
-                          :color="section.iconColor"
-                          v-text="section.icon"
-                        />
-                      </v-list-item-icon>
-
-                      <v-list-item-content>
-                        <v-list-item-title
-                          class="font-weight-light mb-4 mt-3"
-                          v-text="section.title"
-                        />
-
-                        <v-list-item-subtitle v-text="section.text" />
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-col>
-                </v-row>
-              </v-col>
-
-              <v-col
-                cols="12"
-                md="6"
-              >
+              <v-col cols="12" md="12">
                 <div class="text-center">
                   <v-btn
                     v-for="(social, i) in socials"
@@ -71,45 +32,71 @@
                   <div class="text-center grey--text body-1 font-weight-light">
                     Or Be Classical
                   </div>
-
-                  <v-text-field
-                    color="secondary"
-                    label="First Name..."
-                    prepend-icon="mdi-face"
-                  />
-
-                  <v-text-field
-                    color="secondary"
-                    label="Email..."
-                    prepend-icon="mdi-email"
-                  />
-
-                  <v-text-field
-                    class="mb-8"
-                    color="secondary"
-                    label="Password..."
-                    prepend-icon="mdi-lock-outline"
-                  />
-
-                  <v-checkbox
-                    :input-value="true"
-                    color="secondary"
+                  <form
+                    ref="userForm"
+                    class="mt-5"
+                    id="app"
+                    data-vv-scope="form-1"
                   >
-                    <template v-slot:label>
-                      <span class="text-no-wrap">I agree to the&nbsp;</span>
+                    <v-text-field
+                      color="secondary"
+                      v-model="firstname"
+                      v-validate="'required'"
+                      :error-messages="errors.collect('form-1.required')"
+                      data-vv-name="required"
+                      name="firstname"
+                      label="First Name..."
+                      prepend-icon="mdi-face"
+                    />
+                    <v-text-field
+                      color="secondary"
+                      v-model="lastname"
+                      v-validate="'required'"
+                      :error-messages="errors.collect('form-1.required')"
+                      data-vv-name="required"
+                      name="lastname"
+                      label="Last Name..."
+                      prepend-icon="mdi-face-woman "
+                    />
 
-                      <a
-                        class="secondary--text ml-6 ml-sm-0"
-                        href="#"
-                      >
-                        terms and conditions
-                      </a>.
-                    </template>
-                  </v-checkbox>
+                    <v-text-field
+                      color="secondary"
+                      v-model="username"
+                      v-validate="'required'"
+                      :error-messages="errors.collect('form-1.required')"
+                      data-vv-name="required"
+                      name="username"
+                      label="Username..."
+                      prepend-icon="mdi-account"
+                    />
 
-                  <pages-btn color="success">
-                    Get Started
-                  </pages-btn>
+                    <v-text-field
+                      class="mb-8"
+                      color="secondary"
+                      v-model="password"
+                      v-validate="'required'"
+                      :error-messages="errors.collect('form-1.required')"
+                      data-vv-name="required"
+                      name="password"
+                      label="Password..."
+                      prepend-icon="mdi-lock-outline"
+                    />
+
+                    <v-checkbox :input-value="true" color="secondary">
+                      <template v-slot:label>
+                        <span class="text-no-wrap">I agree to the&nbsp;</span>
+                        <a class="secondary--text ml-6 ml-sm-0" href="#">
+                          terms and conditions </a
+                        >.
+                      </template>
+                    </v-checkbox>
+                    <pages-btn
+                      color="success"
+                      @click.prevent="validateForm('form-1')"
+                    >
+                      Get Started
+                    </pages-btn>
+                  </form>
                 </div>
               </v-col>
             </v-row>
@@ -121,60 +108,69 @@
 </template>
 
 <script>
-  export default {
-    name: 'PagesRegister',
+const { authApi } = require("../../apis/");
 
-    components: {
-      PagesBtn: () => import('./components/Btn'),
-      PagesHeading: () => import('./components/Heading')
+export default {
+  name: "PagesRegister",
+
+  $_veeValidate: {
+    validator: "new",
+  },
+  components: {
+    PagesBtn: () => import("./components/Btn"),
+    PagesHeading: () => import("./components/Heading"),
+  },
+
+  data: () => ({
+    socials: [
+      {
+        href: "#",
+        icon: "mdi-twitter",
+        iconColor: "#1DA1F2",
+      },
+      {
+        href: "#",
+        icon: "mdi-instagram",
+        iconColor: "#ea4c89",
+      },
+      {
+        href: "#",
+        icon: "mdi-facebook",
+        iconColor: "#3B5998",
+      },
+    ],
+  }),
+  methods: {
+    validateForm(scope) {
+      this.$validator.validateAll(scope).then(async (result) => {
+        if (result) {
+          const result2 = await authApi.register({
+            firstName: this.$refs.userForm.firstname.value,
+            lastName: this.$refs.userForm.lastname.value,
+            username: this.$refs.userForm.username.value,
+            password: this.$refs.userForm.password.value,
+          });
+          if (result2.data.code === 200) {
+            this.$notificate.showMessage({
+              content: result2.data.message,
+              color: "info",
+            });
+          } else {
+            this.$notificate.showMessage({
+              content: result2.data.message,
+              color: "info",
+            });
+          }
+        }
+      });
     },
-
-    data: () => ({
-      sections: [
-        {
-          icon: 'mdi-chart-timeline-variant',
-          iconColor: 'primary',
-          title: 'Marketing',
-          text: `We've created the marketing campaign of the website. It was a very interesting collaboration.`
-        },
-        {
-          icon: 'mdi-code-tags',
-          iconColor: 'secondary',
-          title: 'Fully Coded in HTML5',
-          text: `We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub.`
-        },
-        {
-          icon: 'mdi-account-multiple',
-          iconColor: 'cyan',
-          title: 'Built Audience',
-          text: 'There is also a Fully Customizable CMS Admin Dashboard for this product.'
-        }
-      ],
-      socials: [
-        {
-          href: '#',
-          icon: 'mdi-twitter',
-          iconColor: '#1DA1F2'
-        },
-        {
-          href: '#',
-          icon: 'mdi-dribbble',
-          iconColor: '#ea4c89'
-        },
-        {
-          href: '#',
-          icon: 'mdi-facebook',
-          iconColor: '#3B5998'
-        }
-
-      ]
-    })
-  }
+  },
+};
 </script>
 
 <style lang="sass">
-  #register
-    .v-list-item__subtitle
-      -webkic-line-clamp: initial
-      -webkit-box-orient: initial
+#register
+  .v-list-item__subtitle
+    -webkic-line-clamp: initial
+    -webkit-box-orient: initial
 </style>
