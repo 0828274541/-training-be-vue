@@ -1,8 +1,10 @@
 const axios = require('./apiHandler');
 
 const categoriesApi = {
-    paging: (payload) => axios.post('/apis/users/paging', { condition: payload }),
-    getCategory: () => axios.get('/apis/categories')
+    getCategory: () => axios.get('/apis/categories'),
+    addCategory: (payload) => axios.post('/apis/categories', { payload }),
+    updateCategory: (payload) => axios.put('/apis/categories', { payload }),
+    deleteCategory: (payload) => axios.post('/apis/categories/delete', payload)
 }
 
 module.exports = categoriesApi;

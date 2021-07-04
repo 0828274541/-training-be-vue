@@ -37,6 +37,7 @@
               prepend-icon="mdi-face"
               class="mt-10"
               v-model="username"
+              @keyup.enter="login"
             />
 
             <v-text-field
@@ -45,6 +46,7 @@
               label="Password..."
               prepend-icon="mdi-lock-outline"
               v-model="password"
+              @keyup.enter="login"
             />
 
             <pages-btn
@@ -52,7 +54,7 @@
               color=""
               depressed
               class="v-btn--text success--text"
-              @click="login()"
+              @click="login"
             >
               Let's Go
             </pages-btn>

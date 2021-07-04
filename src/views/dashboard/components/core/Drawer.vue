@@ -65,7 +65,7 @@ export default {
 
   data: () => ({
     items: [
-            {
+      {
         icon: "mdi-view-dashboard",
         title: "dashboard",
         to: "/"
@@ -74,6 +74,21 @@ export default {
         group: "/users",
         icon: "mdi-image",
         title: "users",
+        children: [
+          {
+            title: "List",
+            to: "list"
+          },
+          {
+            title: "Add",
+            to: "add"
+          }
+        ]
+      },
+      {
+        group: "/categories",
+        icon: "mdi-image",
+        title: "categories",
         children: [
           {
             title: "List",

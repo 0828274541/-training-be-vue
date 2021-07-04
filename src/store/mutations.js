@@ -8,9 +8,6 @@ export default {
   SET_SCRIM(state, payload) {
     state.barColor = payload;
   },
-  SET_USERLIST(state, payload) {
-    state.userList = payload;
-  },
   SET_USER_INFO(state, payload) {
     state.userInfo = payload
   },
@@ -19,5 +16,17 @@ export default {
   },
   SHOW_TOASK(state, payload) {
     state.snack = payload
-  }
+  },
+  SET_USER_LIST(state, payload) {
+    state.userList = payload;
+  },
+  SET_CATEGORY_LIST(state, payload) {
+    state.categoryList = payload;
+  },
+  SET_BOOK_LIST(state, payload) {
+    state.bookList = payload;
+  },
+  SET_SEARCH(state, payload) {
+    state.search = payload;
+  },
 }

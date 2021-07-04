@@ -24,6 +24,9 @@
           hide-details
           rounded
           solo-inverted
+          label="search for title book"
+          v-model="searchItem"
+          @keyup.enter="goToSearch"
         ></v-text-field>
       </v-responsive>
     </v-container>
@@ -31,7 +34,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "PagesCoreAppBar",
@@ -60,6 +63,7 @@ export default {
         to: "/public/login",
       },
     ],
+    searchItem: ""
   }),
   computed: {
     ...mapGetters({ token: "GET_TOKEN" }),
@@ -83,5 +87,23 @@ export default {
       }
     },
   },
+  methods: {
+    ...mapMutations({
+      setSearchItem: "SET_SEARCH",
+    }),
+    goToSearch: function() {
+      if (this.searchItem.trim()) {
+        this.setSearchItem(this.searchItem)
+        this.searchItem = ""
+        if (this.$route.path === "/public/search") {
+            this.$router.go(0);
+        } else {
+            this.$router.push({ path: `/public/search` });
+        }
+      } else {
+        this.$notificate.showMessage({ content: "SEARCH VALUE INVALID", color: 'info' });
+      }
+    }
+  }
 };
 </script>

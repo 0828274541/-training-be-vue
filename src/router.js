@@ -38,6 +38,11 @@ const router = new Router({
           name: "Register",
           path: "register",
           component: () => import("@/views/pages/Register")
+        },
+        {
+          name: "Search",
+          path: "search",
+          component: () => import("@/views/pages/Search")
         }
       ]
     },
@@ -45,6 +50,12 @@ const router = new Router({
       path: "/",
       component: () => import("@/views/dashboard/Index"),
       children: [
+        // Dashboard
+        {
+          name: "Dashboard",
+          path: "",
+          component: () => import("@/views/dashboard/Dashboard")
+        },
         // User
         {
           name: "UserList",
@@ -61,11 +72,21 @@ const router = new Router({
           path: "users/update/:userId",
           component: () => import("@/views/dashboard/users/Update")
         },
-        // Dashboard
+        // Category
         {
-          name: "Dashboard",
-          path: "",
-          component: () => import("@/views/dashboard/Dashboard")
+          name: "Category List",
+          path: "categories/list",
+          component: () => import("@/views/dashboard/categories/List")
+        },
+        {
+          name: "Category Add",
+          path: "categories/add",
+          component: () => import("@/views/dashboard/categories/Add")
+        },
+        {
+          name: "CategoryUpdate",
+          path: "categories/update/:categoryId",
+          component: () => import("@/views/dashboard/categories/Update")
         },
       ]
     },

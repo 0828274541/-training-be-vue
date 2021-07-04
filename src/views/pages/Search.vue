@@ -1,7 +1,7 @@
 <template>
-  <v-row>
-    <v-sheet rounded="lg">
-      <!-- <div class="text-lg-h3 pt-4 pl-4">Example Heading</div> -->
+  <v-main>
+  <v-row justify="center" ><div class="text-lg-h3 pt-10 pl-4">Result: {{this.searchItem}}</div></v-row>
+  <v-row justify="center">
       <div>
         <v-item-group>
           <v-container id="aaaaaa">
@@ -50,15 +50,15 @@
           </v-container>
         </v-item-group>
       </div>
-    </v-sheet>
   </v-row>
+  </v-main>
 </template>
 
 
 <script>
-import eventBus from "../../../event-bus";
+import { mapGetters } from "vuex";
 
-const { booksApi } = require("../../../apis");
+const { booksApi } = require("../../apis");
 
 export default {
   data() {
@@ -67,23 +67,24 @@ export default {
       limit: 6,
       totalPages: 0,
       currentPage: 0,
-      categoryId: 0
+      searchItem: ""
     }
   },
-  mounted() {
-    eventBus.$on("click", async (data) => {
-      this.categoryId = data
-      this.currentPage = 1
-      this.getListPaging()
-    });
-    this.getListPaging()
+  computed: {
+     ...mapGetters({
+      searchItemStore: "GET_SEARCH",
+    }),
+  },
+  mounted: function () {
+    this.searchItem = this.searchItemStore
+    this.getListPaging(this.searchItem)
   },
   methods: {
-    async getListPaging() {
+    async getListPaging(val) {
       const result = await booksApi.getBook({
-        categoryId: this.categoryId,
         page: this.currentPage,
         limit: this.limit,
+        keyword: val
       });
       if (result.data.code === 200) {
         this.books = result.data.books.docs
@@ -97,9 +98,6 @@ export default {
         }
       }
     }
-  },
-  destroyed() {
-    eventBus.$off("click");
   },
 };
 </script>
