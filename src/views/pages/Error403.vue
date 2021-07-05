@@ -10,11 +10,11 @@
     >
       <v-col cols="auto">
         <h1 class="title font-weight-black">
-          404
+          403
         </h1>
 
         <div class="display-3 mb-5 mt-10">
-          Page not found :(
+          Access forbidden :(
         </div>
 
         <v-btn

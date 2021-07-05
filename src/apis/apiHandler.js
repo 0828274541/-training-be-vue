@@ -27,7 +27,7 @@ instance.interceptors.response.use((response) => {
             store.commit('RESET_USER_INFO');
             return router.push("auth/login");
         }
-        case 403: return // handle redirect forbiden page
+        case 403: return router.push("/403"); // handle redirect forbiden page
         default: break;
     }
     return response;

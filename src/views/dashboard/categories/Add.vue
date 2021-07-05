@@ -58,6 +58,7 @@ export default {
         });
         if (result2.data.code === 200) {
           this.$notificate.showMessage({ content: result2.data.message, color: 'info' });
+          this.$router.push("/categories/list");
         }
         }
       })

@@ -107,6 +107,7 @@ export default {
       });
       if (result.data.code === 200) {
         this.setUserInfo(result.data);
+        this.$notificate.showMessage({ content: `Hello.!! ${this.username}`, color: 'info' });
         this.$router.push("/public/home");
       } else if (result.data.code === 400) {
         this.$notificate.showMessage({ content: result.data.message, color: 'info' });

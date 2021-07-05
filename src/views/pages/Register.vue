@@ -151,15 +151,10 @@ export default {
             password: this.$refs.userForm.password.value,
           });
           if (result2.data.code === 200) {
-            this.$notificate.showMessage({
-              content: result2.data.message,
-              color: "info",
-            });
+            this.$notificate.showMessage({content: result2.data.message,color: "info" });
+            this.$router.push("/public/login")
           } else {
-            this.$notificate.showMessage({
-              content: result2.data.message,
-              color: "info",
-            });
+            this.$notificate.showMessage({content: result2.data.message,color: "info" });
           }
         }
       });

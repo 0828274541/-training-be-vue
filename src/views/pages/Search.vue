@@ -1,44 +1,63 @@
 <template>
   <v-main>
-  <v-row justify="center" ><div class="text-lg-h3 pt-10 pl-4">Result: {{this.searchItem}}</div></v-row>
-  <v-row justify="center">
+    <v-row justify="center"
+      ><div class="text-lg-h3 pt-10 pl-4">
+        Result: {{ this.searchItem }}
+      </div></v-row
+    >
+    <v-row justify="center">
       <div>
         <v-item-group>
           <v-container id="aaaaaa">
             <v-row class="row">
-              <v-col
-                v-for="item in books"
-                :key="item"
-                cols="12"
-                md="4"
-              >
+              <v-col v-for="item in books" :key="item" cols="12" md="4">
                 <v-item>
-                  <v-card class="mx-auto" min-width="300" height="400">
+                  <v-card class="mx-auto" min-width="300" height="450">
                     <v-img
+                      v-if="item.cover.length"
                       class="white--text align-end"
-                      height="200px"
-                      src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+                      height="240px"
+                      :src="'http://localhost:3000/' + item.cover[0]"
+                      @click="toDetail(item._id)"
                     >
-                      <v-card-title>{{ item.title }}</v-card-title>
                     </v-img>
+                    <div v-else class="d-flex" justfy="center">
+                      <v-img
+                        class="white--text align-end"
+                        height="240px"
+                        src="http://localhost:3000/public/covers/noimg.jpg"
+                        @click="toDetail(item._id)"
+                      >
+                      </v-img>
+                    </div>
 
-                    <v-card-title class="pb-0"> {{ item.title }} </v-card-title>
-
-                    <v-card-title class="">
-                      <div>{{ item.description }}</div>
+                    <v-card-title class="pb-0" style="height: 50px"
+                      >Tiêu đề: {{ item.title }}
                     </v-card-title>
-
-                    <v-card-actions>
-                      <v-btn color="orange" text> Share </v-btn>
-
-                      <v-btn color="orange" text> Explore </v-btn>
-                    </v-card-actions>
+                    <v-card-title class="pb-0" style="height: 50px"
+                      >Tác giả: {{ item.author }}
+                    </v-card-title>
+                    <v-card-title
+                      style="margin-top: 20px"
+                      class="d-flex justify-center"
+                    >
+                      <v-btn
+                        color="orange"
+                        text-center
+                        @click="toDetail(item._id)"
+                      >
+                        Chi tiết
+                      </v-btn>
+                    </v-card-title>
                   </v-card>
                 </v-item>
               </v-col>
-
             </v-row>
-                          <v-row class="text-center" style="padding-bottom:20px" justify="center">
+            <v-row
+              class="text-center"
+              style="padding-bottom: 20px"
+              justify="center"
+            >
               <v-pagination
                 id="page"
                 v-model="currentPage"
@@ -50,7 +69,7 @@
           </v-container>
         </v-item-group>
       </div>
-  </v-row>
+    </v-row>
   </v-main>
 </template>
 
@@ -67,37 +86,43 @@ export default {
       limit: 6,
       totalPages: 0,
       currentPage: 0,
-      searchItem: ""
-    }
+      searchItem: "",
+    };
   },
   computed: {
-     ...mapGetters({
+    ...mapGetters({
       searchItemStore: "GET_SEARCH",
     }),
   },
   mounted: function () {
-    this.searchItem = this.searchItemStore
-    this.getListPaging(this.searchItem)
+    this.searchItem = this.searchItemStore;
+    this.getListPaging(this.searchItem);
   },
   methods: {
     async getListPaging(val) {
       const result = await booksApi.getBook({
         page: this.currentPage,
         limit: this.limit,
-        keyword: val
+        keyword: val,
       });
       if (result.data.code === 200) {
-        this.books = result.data.books.docs
+        this.books = result.data.books.docs;
         if (this.books.length) {
-          this.totalPages = result.data.books.totalPages
-          this.currentPage = result.data.books.page
-          document.getElementById("page").style.display = ""
+          this.totalPages = result.data.books.totalPages;
+          this.currentPage = result.data.books.page;
+          document.getElementById("page").style.display = "";
         } else {
-          this.$notificate.showMessage({ content: "DATA NOT EXITS", color: 'info' });
-          document.getElementById("page").style.display = "none"
+          this.$notificate.showMessage({
+            content: "DATA NOT EXITS",
+            color: "info",
+          });
+          document.getElementById("page").style.display = "none";
         }
       }
-    }
+    },
+    toDetail(bookId) {
+      this.$router.push({ path: `/public/detail/${bookId}` });
+    },
   },
 };
 </script>
@@ -108,7 +133,7 @@ export default {
 .row {
   background-color: bisque;
 }
-.aaaaaa{
+.aaaaaa {
   background-color: bisque;
 }
 </style>

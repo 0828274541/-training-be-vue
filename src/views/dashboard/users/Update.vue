@@ -22,7 +22,7 @@
                   >
                     <v-text-field
                       color="secondary"
-                      v-model="firstname"
+                      v-model="userUpdate.firstName"
                       v-validate="'required'"
                       :error-messages="errors.collect('form-1.required')"
                       data-vv-name="required"
@@ -32,7 +32,7 @@
                     />
                     <v-text-field
                       color="secondary"
-                      v-model="lastname"
+                      v-model="userUpdate.lastName"
                       v-validate="'required'"
                       :error-messages="errors.collect('form-1.required')"
                       data-vv-name="required"
@@ -43,7 +43,7 @@
 
                     <v-text-field
                       color="secondary"
-                      v-model="username"
+                      v-model="userUpdate.username"
                       v-validate="'required'"
                       :error-messages="errors.collect('form-1.required')"
                       data-vv-name="required"
@@ -55,23 +55,24 @@
                     <v-text-field
                       class="mb-8"
                       color="secondary"
-                      v-model="password"
-                      v-validate="'required'"
-                      :error-messages="errors.collect('form-1.required')"
-                      data-vv-name="required"
+                      v-model="userUpdate.password"
                       name="password"
                       label="Password..."
                       prepend-icon="mdi-lock-outline"
                     />
-
-                    <v-checkbox :input-value="true" color="secondary">
-                      <template v-slot:label>
-                        <span class="text-no-wrap">I agree to the&nbsp;</span>
-                        <a class="secondary--text ml-6 ml-sm-0" href="#">
-                          terms and conditions </a
-                        >.
-                      </template>
-                    </v-checkbox>
+                     <v-select
+                      class="mb-8"
+                      color="secondary"
+                      v-model="userUpdate.role[0]"
+                      v-validate="'required'"
+                      :items="roles"
+                      item-text="role_text"
+                      item-value="role_value"
+                      label="Roles"
+                      :error-messages="errors.collect('form-1.required')"
+                      data-vv-name="required"
+                      prepend-icon="mdi-airplane"
+                    ></v-select>
             <v-card-actions class="pl-0">
               <v-btn
                 color="success"
@@ -88,7 +89,9 @@
   </v-container>
 </template>
 <script>
-const { authApi } = require("../../../apis");
+import { mapGetters } from "vuex";
+
+const { usersApi } = require("../../../apis");
 
 export default {
   name: "DashboardFormsRegularForms",
@@ -98,38 +101,42 @@ export default {
   },
   data: () => ({
     boo: false,
-    categoryUpdate: {},
+    userUpdate: {},
+    roles: [
+        { role_text: "contributor", role_value: "contributor" },
+        { role_text: "normal", role_value: "normal" }
+        ]
   }),
-
+  computed: {
+    ...mapGetters({
+      userList: "GET_USER_LIST",
+    }),
+  },
   mounted: function () {
-    this.getUser()
+    this.userUpdate = this.userList.find(
+      (item) => item._id === this.$route.params.userId
+    );
+    this.userUpdate.password = ""
   },
   methods: {
     validateForm(scope) {
       this.$validator.validateAll(scope).then(async (result) => {
         if (result) {
-          const result2 = await authApi.updateUser({
+          const result2 = await usersApi.updateUser({
             _id: this.$route.params.userId,
-            title: this.categoryUpdate.title,
+            firstName: this.userUpdate.firstName,
+            lastName: this.userUpdate.lastName,
+            username: this.userUpdate.username,
+            password: this.userUpdate.password,
+            roleUpdate: this.userUpdate.role[0]
           });
           if (result2.data.code === 200) {
-                        this.$notificate.showMessage({
-              content: "UPDATE THANH CONG",
-              color: "info",
-            });
-            this.$router.push("/categories/list");
+            this.$notificate.showMessage({ content: result2.data.message, color: "info" });
+            this.$router.push("/users/list");
           }
         }
       });
     },
-    getUser: async function () {
-          const result = await authApi.getUserById({
-            _id: this.$route.params.userId,
-          });
-          if (result.data.code === 200) {
-              this.updateUser = result.data.users
-          }
-    }
   },
 };
 </script>

@@ -53,20 +53,7 @@
       </v-col>
     </v-row>
     <v-card>
-      <v-card-title>
-        Nutrition
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          filled
-          rounded
-          dense
-          single-line
-          @keyup.enter="seachItem"
-        ></v-text-field>
-      </v-card-title>
+
       <v-data-table
         :headers="headers"
         :items="categories"
@@ -127,8 +114,8 @@ export default {
           sortable: false,
           value: "checkedAll",
         },
-        { text: "Id", value: "_id" },
-        { text: "Title", value: "title" },
+        { text: "Id", value: "_id" , sortable: false },
+        { text: "Title", value: "title" , sortable: false  },
         { text: "Action", value: "action", sortable: false },
       ],
       desserts: [],
@@ -180,7 +167,7 @@ export default {
         });
       if (result.data.code === 200) {
         this.$notificate.showMessage({ content: result.data.message, color: 'info' });
-        this.$router.go(0)
+        this.getCategory();
       }
     },
     afterChecked() {

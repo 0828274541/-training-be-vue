@@ -1,10 +1,10 @@
 <template>
-  <v-container id="user-list" fluid tag="section">
-    <h1 class="text-center">User List</h1>
+  <v-container id="book-list" fluid tag="section">
+    <h1 class="text-center">Book List</h1>
 
     <v-row>
       <v-col class="text-left">
-        <v-btn id="myButton" color="primary" class="mb-5" to="/users/add"
+        <v-btn id="myButton" color="primary" class="mb-5" to="/books/add"
           >Add!<v-icon>mdi-plus-box-multiple</v-icon></v-btn
         >
       </v-col>
@@ -17,7 +17,7 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-              id="deleteUser"
+              id="deleteBook"
               color="primary"
               dark
               v-bind="attrs"
@@ -65,7 +65,7 @@
       </v-card-title>
       <v-data-table
         :headers="headers"
-        :items="users"
+        :items="books"
         :search="search"
         :page="page"
         :items-per-page="limit"
@@ -85,15 +85,25 @@
                 <input
                   :value="item._id"
                   type="checkbox"
-                  v-model="userIds"
+                  v-model="bookIds"
                   @change="afterChecked"
                 />
               </td>
-              <td>{{ item._id }}</td>
-              <td>{{ item.username }}</td>
-              <td>{{ item.firstName }}</td>
-              <td>{{ item.lastName }}</td>
-              <td>{{ item.role[0] }}</td>
+              <td>{{ item.description }}</td>
+              <td>{{ item.author }}</td>
+              <td><v-btn
+      color="primary"
+      dark
+      @click.stop="showCover(item._id)"
+    >
+      Open Image
+    </v-btn>
+
+    </td>
+              <td v-if="item.owner">{{ item.owner.username }}</td>
+              <td v-else> null </td>
+              <td v-if="item.category">{{ item.category.title }}</td>
+              <td v-else> null </td>
               <td>
                 <v-btn
                   color="success"
@@ -101,8 +111,8 @@
                   fab
                   x-small
                   :to="{
-                    name: 'UserUpdate',
-                    params: { userId: item._id },
+                    name: 'BookUpdate',
+                    params: { bookId: item._id },
                   }"
                   ><v-icon>mdi-pencil</v-icon></v-btn
                 >
@@ -112,16 +122,38 @@
         </template>
       </v-data-table>
     </v-card>
+    <v-dialog
+      v-model="dialog2"
+      max-width="900"
+    >
+      <v-card>
+             <v-card-title class="text-h5">
+          Use Google's location service?
+        </v-card-title>
+        <div >
+     <img  v-for="item in urlImg"  :src="'http://localhost:3000/'+item" width="200" height="200" style="padding: 10px"/>
+
+            </div>
+          <v-btn
+            color="green darken-1"
+            right--text
+            @click="dialog2 = false"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
 
-const { usersApi } = require("../../../apis");
+const { booksApi } = require("../../../apis");
 
 export default {
-  name: "UserList",
+  name: "BookList",
 
   data() {
     return {
@@ -132,20 +164,21 @@ export default {
           sortable: false,
           value: "checkedAll",
         },
-        { text: "Id", value: "_id", sortable: false },
-        { text: "Username", value: "username" },
-        { text: "Firstname", value: "firstName" },
-        { text: "Lastname", value: "lastName" },
-        { text: "Roles", value: "role", sortable: false },
+        { text: "Description", value: "description" },
+        { text: "Author", value: "author" },
+        { text: "Cover", value: "cover", sortable: false },
+        { text: "Owner", value: "owner", sortable: false },
+        { text: "Category", value: "category", sortable: false },
         { text: "Action", value: "action", sortable: false },
       ],
+      dialog: false,
+      dialog2: false,
       search: "",
-      users: [],
-      userIds: [],
+      books: [],
+      bookIds: [],
       isValid: true,
       booleanValue: false,
       checkedAll: false,
-      dialog: false,
       limit: 5,
       page: 1,
       totalPassengers: 0,
@@ -153,10 +186,11 @@ export default {
       sortBy: "_id",
       sortDesc: "-",
       numberOfPages: 0,
+      urlImg: []
     };
   },
   mounted() {
-    this.getUser();
+    this.getBook();
   },
   watch: {
     options: {
@@ -165,7 +199,7 @@ export default {
         this.limit = newValue.itemsPerPage;
         this.sortBy = newValue.sortBy[0] || "_id";
         this.sortDesc = newValue.sortDesc[0] === false ? "" : "-";
-        this.getUser();
+        this.getBook();
       },
     },
     deep: true,
@@ -173,72 +207,85 @@ export default {
   computed: {
     selectAll: {
       get: function () {
-        return this.users ? this.userIds.length === this.users.length : false;
+        return this.books ? this.bookIds.length === this.books.length : false;
       },
       set: function (value) {
-        const userIds = [];
+        const bookIds = [];
         if (value) {
-          this.users.forEach((item) => {
-            userIds.push(item._id);
+          this.books.forEach((item) => {
+            bookIds.push(item._id);
           });
         }
-        this.userIds = userIds;
+        this.bookIds = bookIds;
         this.afterChecked();
       },
     },
   },
   methods: {
     ...mapMutations({
-      setUserList: "SET_USER_LIST",
+      setBookList: "SET_BOOK_LIST",
     }),
-    getUser: async function () {
-      const result = await usersApi.paging({
+    getBook: async function () {
+      const result = await booksApi.paging({
         search: this.search.trim(),
         page: this.page,
         limit: this.limit,
         sort_column: this.sortBy,
-        sort_direction: this.sortDesc
+        sort_direction: this.sortDesc,
       });
       if (result.data.code === 200) {
         const {
- docs: users, limit, page, totalDocs
-} = result.data.users;
-        if (users.length) {
-        this.page = page;
-        this.numberOfPages = limit;
-        this.totalPassengers = totalDocs;
-
-        this.users = users
-        this.setUserList(this.users); // set data vao store de update
+ docs: books, limit, page, totalDocs
+} = result.data.books;
+        if (books.length) {
+          this.page = page;
+          this.numberOfPages = limit;
+          this.totalPassengers = totalDocs;
+          this.books = books;
+          console.log(this.books.category)
+          this.setBookList(this.books); // set data vao store de update
         } else {
-            this.$notificate.showMessage({ content: "DATA NOT FOUND", color: "info" });
+          this.$notificate.showMessage({
+            content: "DATA NOT FOUND",
+            color: "info",
+          });
         }
       }
     },
     deleteItem: async function () {
       this.dialog = false;
-      const result = await usersApi.deleteUser({
-        userIds: this.userIds,
+      const result = await booksApi.deleteBook({
+        bookIds: this.bookIds,
       });
       if (result.data.code === 200) {
         this.$notificate.showMessage({
           content: result.data.message,
           color: "info",
         });
-        this.getUser();
+        this.getBook()
       }
     },
     afterChecked() {
-      if (this.userIds.length) {
+      if (this.bookIds.length) {
         this.isValid = false;
       } else {
         this.isValid = true;
       }
     },
     seachItem() {
-        this.page = 1;
-        this.getUser()
+      this.page = 1;
+      this.getBook();
     },
+    showCover(val) {
+      this.urlImg = []
+      this.dialog2 = true;
+      this.books.forEach((item) => {
+         if (item._id === val) {
+           this.urlImg = item.cover
+           }
+           })
+      console.log(this.urlImg)
+    }
   },
 };
 </script>

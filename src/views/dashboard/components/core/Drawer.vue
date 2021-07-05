@@ -100,6 +100,21 @@ export default {
           }
         ]
       },
+      {
+        group: "/books",
+        icon: "mdi-image",
+        title: "books",
+        children: [
+          {
+            title: "List",
+            to: "list"
+          },
+          {
+            title: "Add",
+            to: "add"
+          }
+        ]
+      }
     ]
   }),
 
@@ -115,12 +130,13 @@ export default {
     },
     computedItems() {
       return this.items.map(this.mapItem);
+      
     },
     profile() {
       return {
         avatar: true,
         group: "",
-        title: this.$t("avatar"),
+        title: this.$t(`Hello. ${this.$store.state.userInfo.data.user.username} !!!`),
         children: [
           {
             href: "",

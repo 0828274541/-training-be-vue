@@ -21,7 +21,7 @@ const router = new Router({
         },
         {
           name: "Detail",
-          path: "detail",
+          path: "detail/:bookId",
           component: () => import("@/views/pages/public/Detail")
         },
         {
@@ -88,6 +88,49 @@ const router = new Router({
           path: "categories/update/:categoryId",
           component: () => import("@/views/dashboard/categories/Update")
         },
+        // Category
+        {
+          name: "Category List",
+          path: "categories/list",
+          component: () => import("@/views/dashboard/categories/List")
+        },
+        {
+          name: "Category Add",
+          path: "categories/add",
+          component: () => import("@/views/dashboard/categories/Add")
+        },
+        {
+          name: "CategoryUpdate",
+          path: "categories/update/:categoryId",
+          component: () => import("@/views/dashboard/categories/Update")
+        },
+        // Books
+        {
+          name: "Book List",
+          path: "books/list",
+          component: () => import("@/views/dashboard/books/List")
+        },
+        {
+          name: "Book Add",
+          path: "books/add",
+          component: () => import("@/views/dashboard/books/Add")
+        },
+        {
+          name: "BookUpdate",
+          path: "books/update/:bookId",
+          component: () => import("@/views/dashboard/books/Update")
+        },
+      ]
+    },
+    {
+      path: "/403",
+      component: () => import("@/views/pages/Index"),
+      children: [
+        {
+          name: "403 Error",
+          path: "",
+          component: () => import("@/views/pages/Error403")
+        }
       ]
     },
     {
