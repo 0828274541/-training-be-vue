@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "vue-cli-service serve",
+    "start": "node server.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
@@ -13,6 +13,7 @@
     "axios": "^0.21.1",
     "chartist": "^0.11.4",
     "core-js": "^2.6.5",
+    "express": "^4.17.1",
     "lodash": "^4.17.15",
     "vee-validate": "^2.2.15",
     "vue": "^2.6.10",
