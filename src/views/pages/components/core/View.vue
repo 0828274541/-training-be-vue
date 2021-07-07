@@ -11,14 +11,20 @@ export default {
   data: () => ({
     srcs: {
       "/pages/login": "login.jpg",
-      "/pages/register": "register.jpg"
-    }
+      "/pages/register": "register.jpg",
+    },
   }),
 
   computed: {
     src() {
       return this.srcs[this.$route.path];
-    }
-  }
+    },
+  },
 };
 </script>
+<style scoped>
+.pages {
+  background-color: bisque;
+  min-height: 300px;
+}
+</style>

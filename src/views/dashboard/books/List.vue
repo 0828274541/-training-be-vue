@@ -124,16 +124,34 @@
     </v-card>
     <v-dialog
       v-model="dialog2"
-      max-width="900"
+      width="unset"
     >
       <v-card>
              <v-card-title class="text-h5">
           Use Google's location service?
         </v-card-title>
-        <div >
-     <img  v-for="item in urlImg"  :src="'http://localhost:3000/'+item" width="200" height="200" style="padding: 10px"/>
-
-            </div>
+              <v-row no-gutters class="justify-center" v-if="urlImg.length">
+              <v-col  v-for="item in urlImg" :key="item">
+                <img
+                  :src="'https://nodejs2021123456.herokuapp.com/' + item"
+                  width="200px"
+                  height="200px"
+                  style="padding: 10px"
+                />
+              </v-col>
+            </v-row>
+            <v-row no-gutters class="justify-center" v-else>
+              <v-col cols="8">
+                <v-img
+                  src="https://nodejs2021123456.herokuapp.com/public/covers/noimg.jpg"
+                  width="200px"
+                  height="200px"
+                  style="padding: 10px"
+                >
+                </v-img>
+              </v-col>
+            </v-row>
+            <v-row no-gutters class="justify-center">
           <v-btn
             color="green darken-1"
             right--text
@@ -141,6 +159,7 @@
           >
             Close
           </v-btn>
+          </v-row>
         </v-card-actions>
       </v-card>
     </v-dialog>

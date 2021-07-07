@@ -20,7 +20,6 @@ export default {
     DashboardCoreSettings: () => import("./components/core/Settings"),
     DashboardCoreView: () => import("./components/core/View"),
   },
-
   data: () => ({
     expandOnHover: false,
   }),

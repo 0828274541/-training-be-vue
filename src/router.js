@@ -48,6 +48,14 @@ const router = new Router({
     },
     {
       path: "/",
+      beforeEnter: (to, from, next) => {
+        const role = store.getters.GET_USER_INFO.data.user.role[0]
+        if (role === 'normal') {
+          next({ path: '/403' })
+        } else {
+          next()
+        }
+      },
       component: () => import("@/views/dashboard/Index"),
       children: [
         // Dashboard

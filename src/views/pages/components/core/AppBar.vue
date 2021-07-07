@@ -10,6 +10,7 @@
         class="hidden-sm-and-down"
         min-height="48"
         text
+        :id="item.id"
       >
         <v-icon left size="20" v-text="item.icon" />
         <span v-text="item.text" />
@@ -27,6 +28,7 @@
           label="search for title book"
           v-model="searchItem"
           @keyup.enter="goToSearch"
+          clearable
         ></v-text-field>
       </v-responsive>
     </v-container>
@@ -34,7 +36,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 
 export default {
   name: "PagesCoreAppBar",
@@ -48,8 +50,9 @@ export default {
       },
       {
         icon: "mdi-view-dashboard",
-        text: "Dashboard",
+        text: "Admin",
         to: "/",
+        id: "btnAdmin"
       },
 
       {
@@ -65,10 +68,14 @@ export default {
     ],
     searchItem: ""
   }),
+  created() {
+    if (this.$route.path === "/public/search") {
+      this.searchItem = this.$store.getters.GET_SEARCH
+    }
+  },
   computed: {
-    ...mapGetters({ token: "GET_TOKEN" }),
     menuItems: function () {
-      if (this.token) {
+      if (this.$store.getters.GET_TOKEN) {
         return this.items.map((item) => {
           if (item.text === "Login") {
             item.text = "Logout";
@@ -87,21 +94,30 @@ export default {
       }
     },
   },
+  updated() {
+      this.checkRoleUser()
+  },
+  mounted() {
+      this.checkRoleUser()
+  },
   methods: {
     ...mapMutations({
       setSearchItem: "SET_SEARCH",
     }),
     goToSearch: function() {
-      if (this.searchItem.trim()) {
         this.setSearchItem(this.searchItem)
-        this.searchItem = ""
         if (this.$route.path === "/public/search") {
             this.$router.go(0);
         } else {
             this.$router.push({ path: `/public/search` });
         }
+    },
+    checkRoleUser: function() {
+      const { data } = this.$store.getters.GET_USER_INFO
+      if (!data || data.user.role[0] === 'normal') {
+          document.getElementById("btnAdmin").style.display = "none"; 
       } else {
-        this.$notificate.showMessage({ content: "SEARCH VALUE INVALID", color: 'info' });
+        document.getElementById("btnAdmin").style.display = "" ;
       }
     }
   }

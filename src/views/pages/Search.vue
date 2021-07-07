@@ -1,10 +1,5 @@
 <template>
   <v-main>
-    <v-row justify="center"
-      ><div class="text-lg-h3 pt-10 pl-4">
-        Result: {{ this.searchItem }}
-      </div></v-row
-    >
     <v-row justify="center">
       <div>
         <v-item-group>
@@ -17,7 +12,7 @@
                       v-if="item.cover.length"
                       class="white--text align-end"
                       height="240px"
-                      :src="'http://localhost:3000/' + item.cover[0]"
+                      :src="'https://nodejs2021123456.herokuapp.com/' + item.cover[0]"
                       @click="toDetail(item._id)"
                     >
                     </v-img>
@@ -25,7 +20,7 @@
                       <v-img
                         class="white--text align-end"
                         height="240px"
-                        src="http://localhost:3000/public/covers/noimg.jpg"
+                        src="https://nodejs2021123456.herokuapp.com/public/covers/noimg.jpg"
                         @click="toDetail(item._id)"
                       >
                       </v-img>
@@ -37,15 +32,8 @@
                     <v-card-title class="pb-0" style="height: 50px"
                       >Tác giả: {{ item.author }}
                     </v-card-title>
-                    <v-card-title
-                      style="margin-top: 20px"
-                      class="d-flex justify-center"
-                    >
-                      <v-btn
-                        color="orange"
-                        text-center
-                        @click="toDetail(item._id)"
-                      >
+                    <v-card-title style="margin-top: 20px" class="d-flex justify-center">
+                      <v-btn color="orange" text-center @click="toDetail(item._id)">
                         Chi tiết
                       </v-btn>
                     </v-card-title>
@@ -53,11 +41,7 @@
                 </v-item>
               </v-col>
             </v-row>
-            <v-row
-              class="text-center"
-              style="padding-bottom: 20px"
-              justify="center"
-            >
+            <v-row class="text-center" style="padding-bottom: 20px" justify="center">
               <v-pagination
                 id="page"
                 v-model="currentPage"
@@ -66,13 +50,23 @@
                 circle
               ></v-pagination>
             </v-row>
+            <v-row v-show="data" class="justify-center">
+              <p
+                class="text-xl-h4 text-center font-weight-black"
+                style="font-size: 50px; height:100%"
+              >
+                Ko tìm thấy kết quả
+              </p>
+            </v-row>
+            <v-row class="d-flex justify-center" style="padding: 20px">
+              <v-btn rounded color="primary" dark to="/public/home"> HOME PAGE </v-btn>
+            </v-row>
           </v-container>
         </v-item-group>
       </div>
     </v-row>
   </v-main>
 </template>
-
 
 <script>
 import { mapGetters } from "vuex";
@@ -87,14 +81,15 @@ export default {
       totalPages: 0,
       currentPage: 0,
       searchItem: "",
+      data: false
     };
   },
   computed: {
     ...mapGetters({
-      searchItemStore: "GET_SEARCH",
-    }),
+      searchItemStore: "GET_SEARCH"
+    })
   },
-  mounted: function () {
+  mounted: function() {
     this.searchItem = this.searchItemStore;
     this.getListPaging(this.searchItem);
   },
@@ -103,7 +98,7 @@ export default {
       const result = await booksApi.getBook({
         page: this.currentPage,
         limit: this.limit,
-        keyword: val,
+        keyword: val
       });
       if (result.data.code === 200) {
         this.books = result.data.books.docs;
@@ -112,18 +107,15 @@ export default {
           this.currentPage = result.data.books.page;
           document.getElementById("page").style.display = "";
         } else {
-          this.$notificate.showMessage({
-            content: "DATA NOT EXITS",
-            color: "info",
-          });
+          this.data = true;
           document.getElementById("page").style.display = "none";
         }
       }
     },
     toDetail(bookId) {
       this.$router.push({ path: `/public/detail/${bookId}` });
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>

@@ -50,7 +50,7 @@
             <v-select
               class="mb-8"
               color="secondary"
-              v-model="bookUpdate.category"
+              v-model="bookUpdate.category._id"
               v-validate="'required'"
               :items="categories"
               item-text="title"
@@ -84,7 +84,7 @@
             <v-row v-else-if="bookUpdate.cover.length">
               <v-col cols="2" v-for="item in bookUpdate.cover" :key="item">
                 <img
-                  :src="'http://localhost:3000/' + item"
+                  :src="'https://nodejs2021123456.herokuapp.com/' + item"
                   width="200px"
                   height="200px"
                   style="padding: 10px"
@@ -94,7 +94,7 @@
             <v-row v-else>
               <v-col cols="2">
                 <v-img
-                  src="http://localhost:3000/public/covers/noimg.jpg"
+                  src="https://nodejs2021123456.herokuapp.com/public/covers/noimg.jpg"
                   width="200px"
                   height="200px"
                   style="padding: 10px"
@@ -150,7 +150,8 @@ export default {
           formData.append("title", this.bookUpdate.title);
           formData.append("description", this.bookUpdate.description);
           formData.append("author", this.bookUpdate.author);
-          formData.append("category", this.bookUpdate.category);
+          formData.append("category", this.bookUpdate.category._id);
+
           const result2 = await booksApi.updateBook(
             this.bookUpdate._id,
             formData

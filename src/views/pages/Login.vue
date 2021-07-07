@@ -6,7 +6,7 @@
           color="success"
           light
           max-width="100%"
-          width="400"
+          width="450px"
           class="px-5 py-3"
         >
           <template v-slot:heading>
@@ -39,29 +39,57 @@
               v-model="username"
               @keyup.enter="login"
             />
-
-            <v-text-field
-              class="mb-8"
-              color="secondary"
-              label="Password..."
-              prepend-icon="mdi-lock-outline"
-              v-model="password"
-              @keyup.enter="login"
-            />
-
+          <v-text-field
+            v-model="password"
+            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
+            :rules="[rules.required, rules.min]"
+            :type="show3 ? 'text' : 'password'"
+            name="input-10-2"
+            label="password"
+            hint="At least 6 characters"
+            class="input-group--focused"
+            @click:append="show3 = !show3"
+            @keyup.enter="login"
+            prepend-icon="mdi-key"
+          ></v-text-field>
             <pages-btn
               large
               color=""
               depressed
-              class="v-btn--text success--text"
+              class="light-blue lighten-1"
               @click="login"
             >
               Let's Go
             </pages-btn>
+
           </v-card-text>
+          <v-row style="margin-top:20px; margin-bottom:20px;" class="justify-space-between">
+      <v-btn
+      depressed
+      color="primary"
+      @click="addValue('admin')"
+    >
+      ADMIN
+    </v-btn>
+                <v-btn
+      depressed
+      color="secondary"
+      @click="addValue('contributor')"
+    >
+      CONTRIBUTOR
+    </v-btn>
+                <v-btn
+      depressed
+      class="orange"
+      @click="addValue('normal')"
+    >
+      NORMAL
+    </v-btn>
+          </v-row>
         </base-material-card>
       </v-slide-y-transition>
     </v-row>
+
   </v-container>
 </template>
 
@@ -93,6 +121,12 @@ export default {
     ],
     username: "",
     password: "",
+    show3: false,
+        rules: {
+          required: value => !!value || 'Required.',
+          min: v => v.length >= 6 || 'Min 6 characters',
+          emailMatch: () => (`The email and password you entered don't match`),
+        },
   }),
 
   methods: {
@@ -113,6 +147,16 @@ export default {
         this.$notificate.showMessage({ content: result.data.message, color: 'info' });
       }
     },
+    addValue(val) {
+      this.password = '123456'
+      if (val === 'admin') {
+         this.username = 'admin'
+      } else if (val === 'contributor') {
+        this.username = 'contributor'
+      } else {
+        this.username = 'normal'
+      }
+    }
   },
 };
 </script>

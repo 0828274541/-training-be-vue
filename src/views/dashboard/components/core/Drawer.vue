@@ -38,7 +38,6 @@
         <base-item-group v-if="item.children" :key="`group-${i}`" :item="item">
           <!--  -->
         </base-item-group>
-
         <base-item v-else :key="`item-${i}`" :item="item" />
       </template>
 
@@ -117,7 +116,14 @@ export default {
       }
     ]
   }),
-
+  mounted() {
+      const role = this.$store.getters.GET_USER_INFO.data.user.role[0]
+      if (role === 'contributor') {
+          this.items = this.items.filter(item => item.group === '/books')
+      } else if (role === 'normal') {
+          this.$router.push("/403")
+      }
+  },
   computed: {
     ...mapState(["barColor", "barImage"]),
     drawer: {
@@ -130,7 +136,6 @@ export default {
     },
     computedItems() {
       return this.items.map(this.mapItem);
-      
     },
     profile() {
       return {

@@ -9,13 +9,13 @@
                 <img
                   v-for="item in book.cover"
                   :key="item"
-                  :src="'http://localhost:3000/' + item"
+                  :src="'https://nodejs2021123456.herokuapp.com/' + item"
                 />
               </carousel>
             </div>
             <div v-else>
               <v-img
-                src="http://localhost:3000/public/covers/noimg.jpg"
+                src="https://nodejs2021123456.herokuapp.com/public/covers/noimg.jpg"
               ></v-img>
             </div>
           </v-col>

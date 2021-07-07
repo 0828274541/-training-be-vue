@@ -1,5 +1,11 @@
 <template>
-  <v-snackbar id="snackbar" v-model="show" :color="color" top :timeout="timeout">
+  <v-snackbar
+    id="snackbar"
+    v-model="show"
+    :color="color"
+    top
+    :timeout="timeout"
+  >
     {{ message }}
     <!-- <v-btn text @click="show = false">Close</v-btn> -->
   </v-snackbar>
@@ -7,25 +13,25 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       show: false,
-      message: '',
-      color: '',
-      timeout: 2000
-    }
+      message: "",
+      color: "",
+      timeout: 2000,
+    };
   },
 
-  created () {
+  created() {
     this.$store.subscribe((mutation) => {
-      if (mutation.type === 'SHOW_TOASK') {
-        this.message = mutation.payload.content
-        this.color = mutation.payload.color
-        this.show = true
+      if (mutation.type === "SHOW_TOASK") {
+        this.message = mutation.payload.content;
+        this.color = mutation.payload.color;
+        this.show = true;
       }
-    })
-  }
-}
+    });
+  },
+};
 </script>
 <style>
 .v-snack__content {

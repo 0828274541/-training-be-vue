@@ -10,9 +10,7 @@ const vuexPersist = new VuexPersist({
   storage: window.localStorage
 })
 
-
 Vue.use(Vuex);
-
 
 export default new Vuex.Store({
   plugins: [vuexPersist.plugin],
