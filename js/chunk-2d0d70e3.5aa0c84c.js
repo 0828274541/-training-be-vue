@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0d70e3"],{"74d4":function(t,o,n){"use strict";n.r(o);const{authApi:s}=n("f8c8");var u,a,e={name:"PagesLogout",mounted:async function(){const t=await s.logout();200===t.data.code&&(this.$store.commit("SET_USER_INFO",{}),this.$router.push("/pages/login"))}},c=e,i=n("2877"),d=Object(i["a"])(c,u,a,!1,null,null,null);o["default"]=d.exports}}]);
+//# sourceMappingURL=chunk-2d0d70e3.5aa0c84c.js.map

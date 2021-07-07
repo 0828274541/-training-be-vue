@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+  <meta charset=utf-8>
+  <meta http-equiv=X-UA-Compatible content="IE=edge">
+  <meta name=viewport content="width=device-width,initial-scale=1">
+  <title>Vuetify Md Pro</title>
+  <link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
+  <link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css>
+  <script>// Single Page Apps for GitHub Pages
+    // https://github.com/rafrex/spa-github-pages
+    // Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
+    // ----------------------------------------------------------------------
+    // This script checks to see if a redirect is present in the query string
+    // and converts it back into the correct url and adds it to the
+    // browser's history using window.history.replaceState(...),
+    // which won't cause the browser to attempt to load the new url.
+    // When the single page app is loaded further down in this file,
+    // the correct url will be waiting in the browser's history for
+    // the single page app to route accordingly.
+    (function (l) {
+      if (l.search) {
+        var q = {};
+        l.search.slice(1).split('&').forEach(function (v) {
+          var a = v.split('=');
+          q[a[0]] = a.slice(1).join('=').replace(/~and~/g, '&');
+        });
+        if (q.p !== undefined) {
+          window.history.replaceState(null, null,
+            l.pathname.slice(0, -1) + (q.p || '') +
+            (q.q ? ('?' + q.q) : '') +
+            l.hash
+          );
+        }
+      }
+    }(window.location))
+      // End Single Page Apps for GitHub Pages</script>
+  <link href=/training-fe-vue/css/chunk-02ced5a2.1b6a4ba9.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-11b9888e.1a29eb6f.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-12e4b288.09d15944.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-16a17869.ed0ef8bc.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-290f4852.f4bacc26.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-2ebac006.a4a92319.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-2f914ad4.73d90aa2.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-37a7e15c.a796aee4.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-5e1812af.594fd93d.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-64d73b02.88b6ca00.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-6b7e939a.73d90aa2.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-6dc1706e.434a9723.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-6e2ace4c.2f77b0a8.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-73c70700.2408d11f.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-75bccbbc.6b07b668.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-77558fc7.8ff200a4.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-7a7486c7.55a4f6a1.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-878a6114.f4f2c1ce.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-8b013fc4.2d52ccdd.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-bc87757c.0a61c8ef.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-c35e20be.88b6ca00.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-c589ce16.323915c6.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-d094b178.73d90aa2.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-d8ccf8f4.bb4f6033.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-e5872d88.2d52ccdd.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-ee4797ba.02757dd2.css rel=prefetch>
+  <link href=/training-fe-vue/css/chunk-fb6eb62a.7d83fc88.css rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-02ced5a2.9a91508a.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-11b9888e.060f4125.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-12e4b288.c2e41c99.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-162cff74.8c4b8c9c.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-16a17869.6fffab5f.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-28d51b10.e1f5484d.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-290f4852.44c68a70.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-2d0b2927.44d3cb49.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-2d0bb209.4bf95a05.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-2d0c4bbd.ea955e11.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-2d0d7087.667a0434.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-2d0d70e3.5aa0c84c.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-2d0e28b8.59463917.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-2d21444e.41d9ffe9.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-2ebac006.6ffcc6b0.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-2f914ad4.15b036ab.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-37a7e15c.dd1f72e4.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-575878c0.990872f6.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-5c9d0238.76e2be10.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-5e1812af.da7024b4.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-64d73b02.ea45a2a0.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-6b7e939a.dfb6d6e7.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-6dc1706e.03bb2b2f.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-6e2ace4c.d7912987.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-73c70700.9a45c8c4.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-75bccbbc.2c097f20.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-77558fc7.e156c4eb.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-7a7486c7.e8eb96c4.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-878a6114.5400cd80.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-8b013fc4.3edb7647.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-bc87757c.4eeee5a3.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-c35e20be.2a468182.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-c589ce16.99caaf3e.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-cee8a960.13bccc23.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-d094b178.d502b47f.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-d8ccf8f4.c5f49155.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-e5872d88.1ab1646c.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-ee4797ba.ec942623.js rel=prefetch>
+  <link href=/training-fe-vue/js/chunk-fb6eb62a.6ecaec21.js rel=prefetch>
+  <link href=/training-fe-vue/css/app.4134c193.css rel=preload as=style>
+  <link href=/training-fe-vue/css/chunk-vendors.7b5e20b7.css rel=preload as=style>
+  <link href=/training-fe-vue/js/app.c209e025.js rel=preload as=script>
+  <link href=/training-fe-vue/js/chunk-vendors.8699c98d.js rel=preload as=script>
+  <link href=/training-fe-vue/css/chunk-vendors.7b5e20b7.css rel=stylesheet>
+  <link href=/training-fe-vue/css/app.4134c193.css rel=stylesheet>
+</head>
+
+<body><noscript><strong>We're sorry but vuetify-md-pro doesn't work properly without JavaScript enabled. Please enable
+      it to continue.</strong></noscript>
+  <div id=app></div>
+  <script src=/training-fe-vue/js/chunk-vendors.8699c98d.js></script>
+  <script src=/training-fe-vue/js/app.c209e025.js></script>
+</body>
+
+</html>
