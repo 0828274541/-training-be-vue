@@ -12,7 +12,7 @@
                       v-if="item.cover.length"
                       class="white--text align-end"
                       height="240px"
-                      :src="'https://nodejs2021123456.herokuapp.com/' + item.cover[0]"
+                      :src="'https://training-be-node.herokuapp.com/' + item.cover[0]"
                       @click="toDetail(item._id)"
                     >
                     </v-img>
@@ -20,7 +20,7 @@
                       <v-img
                         class="white--text align-end"
                         height="240px"
-                        src="https://nodejs2021123456.herokuapp.com/public/covers/noimg.jpg"
+                        src="https://training-be-node.herokuapp.com/public/covers/noimg.jpg"
                         @click="toDetail(item._id)"
                       >
                       </v-img>

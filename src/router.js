@@ -11,38 +11,38 @@ const router = new Router({
   routes: [
     {
       path: "/public",
-      component: () => import("@/views/pages/Index"),
+      component: () => import("./views/pages/Index.vue"),
       children: [
         {
           name: "Home",
           path: "home",
-          component: () => import("@/views/pages/public/Home"),
+          component: () => import("./views/pages/public/Home"),
           // props: route => ({ page: route.query.page, limit: route.query.limit })
         },
         {
           name: "Detail",
           path: "detail/:bookId",
-          component: () => import("@/views/pages/public/Detail")
+          component: () => import("./views/pages/public/Detail")
         },
         {
           name: "Login",
           path: "login",
-          component: () => import("@/views/pages/Login")
+          component: () => import("./views/pages/Login")
         },
         {
           name: "Logout",
           path: "logout",
-          component: () => import("@/views/pages/Logout")
+          component: () => import("./views/pages/Logout")
         },
         {
           name: "Register",
           path: "register",
-          component: () => import("@/views/pages/Register")
+          component: () => import("./views/pages/Register")
         },
         {
           name: "Search",
           path: "search",
-          component: () => import("@/views/pages/Search")
+          component: () => import("./views/pages/Search")
         }
       ]
     },
@@ -56,99 +56,99 @@ const router = new Router({
           next()
         }
       },
-      component: () => import("@/views/dashboard/Index"),
+      component: () => import("./views/dashboard/Index"),
       children: [
         // Dashboard
         {
           name: "Dashboard",
           path: "",
-          component: () => import("@/views/dashboard/Dashboard")
+          component: () => import("./views/dashboard/Dashboard")
         },
         // User
         {
           name: "UserList",
           path: "users/list",
-          component: () => import("@/views/dashboard/users/List")
+          component: () => import("./views/dashboard/users/List")
         },
         {
           name: "User Add",
           path: "users/add",
-          component: () => import("@/views/dashboard/users/Add")
+          component: () => import("./views/dashboard/users/Add")
         },
         {
           name: "UserUpdate",
           path: "users/update/:userId",
-          component: () => import("@/views/dashboard/users/Update")
+          component: () => import("./views/dashboard/users/Update")
         },
         // Category
         {
           name: "Category List",
           path: "categories/list",
-          component: () => import("@/views/dashboard/categories/List")
+          component: () => import("./views/dashboard/categories/List")
         },
         {
           name: "Category Add",
           path: "categories/add",
-          component: () => import("@/views/dashboard/categories/Add")
+          component: () => import("./views/dashboard/categories/Add")
         },
         {
           name: "CategoryUpdate",
           path: "categories/update/:categoryId",
-          component: () => import("@/views/dashboard/categories/Update")
+          component: () => import("./views/dashboard/categories/Update")
         },
         // Category
         {
           name: "Category List",
           path: "categories/list",
-          component: () => import("@/views/dashboard/categories/List")
+          component: () => import("./views/dashboard/categories/List")
         },
         {
           name: "Category Add",
           path: "categories/add",
-          component: () => import("@/views/dashboard/categories/Add")
+          component: () => import("./views/dashboard/categories/Add")
         },
         {
           name: "CategoryUpdate",
           path: "categories/update/:categoryId",
-          component: () => import("@/views/dashboard/categories/Update")
+          component: () => import("./views/dashboard/categories/Update")
         },
         // Books
         {
           name: "Book List",
           path: "books/list",
-          component: () => import("@/views/dashboard/books/List")
+          component: () => import("./views/dashboard/books/List")
         },
         {
           name: "Book Add",
           path: "books/add",
-          component: () => import("@/views/dashboard/books/Add")
+          component: () => import("./views/dashboard/books/Add")
         },
         {
           name: "BookUpdate",
           path: "books/update/:bookId",
-          component: () => import("@/views/dashboard/books/Update")
+          component: () => import("./views/dashboard/books/Update")
         },
       ]
     },
     {
       path: "/403",
-      component: () => import("@/views/pages/Index"),
+      component: () => import("./views/pages/Index"),
       children: [
         {
           name: "403 Error",
           path: "",
-          component: () => import("@/views/pages/Error403")
+          component: () => import("./views/pages/Error403")
         }
       ]
     },
     {
       path: "*",
-      component: () => import("@/views/pages/Index"),
+      component: () => import("./views/pages/Index"),
       children: [
         {
           name: "404 Error",
           path: "",
-          component: () => import("@/views/pages/Error")
+          component: () => import("./views/pages/Error")
         }
       ]
     }
@@ -165,5 +165,41 @@ router.beforeEach((to, from, next) => {
     next({ name: 'Home' })
   } else next()
 })
+
+// const permission = [
+//   {
+//       roles: 'normal',
+//       namePage: [
+//           'Home', 'ChangePassword', 'BookDetail'
+//       ]
+//   },
+//   {
+//       roles: 'contributor',
+//       namePage: [
+//           'Home', 'ChangePassword', 'BookDetail', 'Dashboard', 'BooksManagement',
+//           'AddBook', 'EditBook'
+//       ]
+//   },
+// ]
+
+// router.beforeEach((to, from, next) => {
+//   const token = store.getters.GET_TOKEN;
+//   var role = ''
+//   if (token) {
+//       role = store.getters.GET_ROLE
+//   }
+//   const permissionObj = permission.find(({ roles }) => roles === role)
+//   if (to.name == 'Home' && !token) {
+//       next({ name: 'Login' })
+//   } else if (to.name === 'Login' && token) {
+//       next({ name: 'Home' })
+//   } else if (permissionObj) {
+//       if (permissionObj.namePage.includes(to.name)) {
+//           next()
+//       } else {
+//           next({ name: 'Home' })
+//       }
+//   } else next()
+// })
 
 export default router;

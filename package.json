@@ -10,6 +10,7 @@
     "fixerror": "eslint --fix --fix-type suggestion ."
   },
   "dependencies": {
+    "@babel/node": "^7.14.7",
     "axios": "^0.21.1",
     "chartist": "^0.11.4",
     "core-js": "^2.6.5",

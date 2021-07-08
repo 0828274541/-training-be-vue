@@ -4,7 +4,7 @@ const router = require('../router').default
 
 // Set config defaults when creating the instance
 const instance = axios.create({
-    baseURL: 'https://nodejs2021123456.herokuapp.com'
+    baseURL: 'https://training-be-node.herokuapp.com'
 });
 
 store.subscribe((mutation) => {

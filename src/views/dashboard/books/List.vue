@@ -133,7 +133,7 @@
               <v-row no-gutters class="justify-center" v-if="urlImg.length">
               <v-col  v-for="item in urlImg" :key="item">
                 <img
-                  :src="'https://nodejs2021123456.herokuapp.com/' + item"
+                  :src="'https://training-be-node.herokuapp.com/' + item"
                   width="200px"
                   height="200px"
                   style="padding: 10px"
@@ -143,7 +143,7 @@
             <v-row no-gutters class="justify-center" v-else>
               <v-col cols="8">
                 <v-img
-                  src="https://nodejs2021123456.herokuapp.com/public/covers/noimg.jpg"
+                  src="https://training-be-node.herokuapp.com/public/covers/noimg.jpg"
                   width="200px"
                   height="200px"
                   style="padding: 10px"
